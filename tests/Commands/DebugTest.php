@@ -1,10 +1,10 @@
 <?php
 
-namespace Sebdesign\SM\Test\Commands;
+namespace troojaan\SM\Test\Commands;
 
 use Illuminate\Contracts\Console\Kernel;
-use Sebdesign\SM\Test\ConsoleHelpers;
-use Sebdesign\SM\Test\TestCase;
+use troojaan\SM\Test\ConsoleHelpers;
+use troojaan\SM\Test\TestCase;
 
 class DebugTest extends TestCase
 {
@@ -35,7 +35,7 @@ class DebugTest extends TestCase
 
         $config = $this->app['config']->get('state-machine', []);
 
-        $command = \Mockery::spy('\Sebdesign\SM\Commands\Debug[choice]', [$config]);
+        $command = \Mockery::spy('\troojaan\SM\Commands\Debug[choice]', [$config]);
 
         $choices = [
             'graphA'."\t(".'App\User - graphA)',
@@ -67,7 +67,7 @@ class DebugTest extends TestCase
     {
         // Arrange
 
-        $command = \Mockery::spy('\Sebdesign\SM\Commands\Debug[error]', [[]]);
+        $command = \Mockery::spy('\troojaan\SM\Commands\Debug[error]', [[]]);
 
         $this->app[Kernel::class]->registerCommand($command);
 
@@ -89,7 +89,7 @@ class DebugTest extends TestCase
     {
         // Arrange
 
-        $command = \Mockery::spy('\Sebdesign\SM\Commands\Debug[error]', [['foo' => []]]);
+        $command = \Mockery::spy('\troojaan\SM\Commands\Debug[error]', [['foo' => []]]);
 
         $this->app[Kernel::class]->registerCommand($command);
 

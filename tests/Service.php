@@ -1,6 +1,6 @@
 <?php
 
-namespace Sebdesign\SM\Test;
+namespace troojaan\SM\Test;
 
 use Illuminate\Contracts\Foundation\Application;
 use SM\Event\TransitionEvent;

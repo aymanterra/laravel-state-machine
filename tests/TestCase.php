@@ -1,10 +1,10 @@
 <?php
 
-namespace Sebdesign\SM\Test;
+namespace troojaan\SM\Test;
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Sebdesign\SM\Facade;
-use Sebdesign\SM\ServiceProvider;
+use troojaan\SM\Facade;
+use troojaan\SM\ServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {
