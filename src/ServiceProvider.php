@@ -31,6 +31,8 @@ class ServiceProvider extends BaseServiceProvider
             $this->publishes([
                __DIR__.'/../config/state-machine.php' => config_path('state-machine.php'),
            ], 'config');
+
+            $this->loadMigrationsFrom(__DIR__.'/../migrations/2018_03_26_133117_create_workflow_history_table.php');
         }
     }
 
