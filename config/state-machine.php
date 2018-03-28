@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'graphA' => [
+    'simple' => [
         // class of your domain object
-        'class' => App\User::class,
+        'class' => App\Order::class,
 
         // name of the graph (default is "default")
-        'graph' => 'graphA',
+        'graph' => 'simple',
 
         // property of your object holding the actual state (default is "state")
         'property_path' => 'state',
@@ -17,8 +17,8 @@ return [
             'pending_review',
             'awaiting_changes',
             'accepted',
-            'published',
             'rejected',
+            'published',
         ],
 
         // list of all possible transitions
@@ -28,7 +28,7 @@ return [
                 'to' => 'pending_review',
             ],
             'ask_for_changes' => [
-                'from' =>  ['pending_review', 'accepted'],
+                'from' => ['pending_review', 'accepted'],
                 'to' => 'awaiting_changes',
             ],
             'cancel_changes' => [
@@ -37,37 +37,89 @@ return [
             ],
             'submit_changes' => [
                 'from' => ['awaiting_changes'],
-                'to' =>  'pending_review',
+                'to' => 'pending_review',
             ],
             'approve' => [
                 'from' => ['pending_review', 'rejected'],
-                'to' =>  'accepted',
+                'to' => 'accepted',
             ],
             'publish' => [
                 'from' => ['accepted'],
-                'to' =>  'published',
+                'to' => 'published',
             ],
         ],
 
-        // list of all callbacks
         'callbacks' => [
-            // will be called when testing a transition
+
             'guard' => [
+                'guard_on_creating' => [
+                    'on' => ['create'],
+                    'do' => 'App\your-directory\CreateCallback@fire',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
+                'guard_on_ask_for_changes' => [
+                    'on' => ['ask_for_changes'],
+                    'do' => 'App\your-directory\AskForChangesCallback@fire',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
+                'guard_on_cancel_changes' => [
+                    'on' => ['cancel_changes'],
+                    'do' => 'App\your-directory\CancelChangesCallback@fire',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
                 'guard_on_submitting' => [
-                    // call the callback on a specific transition
-                    'on' => 'submit_changes',
-                    // will call the method of this class
-                    'do' => ['MyClass', 'handle'],
-                    // arguments for the callback
-                    'args' => ['object'],
+                    'on' => ['submit_changes'],
+                    'do' => 'App\your-directory\SubmitChangesCallback@fire',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
+                'guard_on_approving' => [
+                    'on' => ['approve'],
+                    'do' => 'App\your-directory\ApproveCallback@fire',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
+                'guard_on_publishing' => [
+                    'on' => ['publish'],
+                    'do' => 'App\your-directory\PublishCallback@fire',
+                    'args' => ['object', 'event', '"simple"'],
                 ],
             ],
 
             // will be called before applying a transition
             'before' => [],
-
             // will be called after applying a transition
-            'after' => [],
+            'after' => [
+                'after_creating' => [
+                    'on' => ['create'],
+                    'do' => 'App\your-directory\CreateCallback@addHistory',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
+                'after_ask_for_changes' => [
+                    'on' => ['ask_for_changes'],
+                    'do' => 'App\your-directory\AskForChangesCallback@addHistory',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
+                'after_cancel_changes' => [
+                    'on' => ['cancel_changes'],
+                    'do' => 'App\your-directory\CancelChangesCallback@addHistory',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
+                'after_submitting' => [
+                    'on' => ['submit_changes'],
+                    'do' => 'App\your-directory\SubmitChangesCallback@addHistory',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
+                'after_approving' => [
+                    'on' => ['approve'],
+                    'do' => 'App\your-directory\ApproveCallback@addHistory',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
+                'after_publishing' => [
+                    'on' => ['publish'],
+                    'do' => 'App\your-directory\PublishCallback@addHistory',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
+            ],
         ],
     ],
+
 ];
