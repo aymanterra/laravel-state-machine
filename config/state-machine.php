@@ -25,27 +25,30 @@ return [
         'transitions' => [
             'create' => [
                 'from' => ['new'],
-                'to' => 'pending_review',
+                'to' => ['pending_review'],
             ],
             'ask_for_changes' => [
                 'from' => ['pending_review', 'accepted'],
-                'to' => 'awaiting_changes',
+                'to' => ['awaiting_changes'],
+                // to make the from states dependent on each other
+                // (cant proceed unless if all from states are in the current states)
+                // 'dependent' =>  true,
             ],
             'cancel_changes' => [
                 'from' => ['awaiting_changes'],
-                'to' => 'pending_review',
+                'to' => ['pending_review'],
             ],
             'submit_changes' => [
                 'from' => ['awaiting_changes'],
-                'to' => 'pending_review',
+                'to' => ['pending_review'],
             ],
             'approve' => [
                 'from' => ['pending_review', 'rejected'],
-                'to' => 'accepted',
+                'to' => ['accepted'],
             ],
             'publish' => [
                 'from' => ['accepted'],
-                'to' => 'published',
+                'to' => ['published'],
             ],
         ],
 
