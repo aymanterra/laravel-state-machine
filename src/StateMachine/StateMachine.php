@@ -20,9 +20,67 @@ use SM\SMException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use SM\StateMachine\StateMachineInterface;
 
-class StateMachine extends SM\StateMachine\StateMachine
+class StateMachine implements StateMachineInterface
 {
+    /**
+     * @var object
+     */
+    protected $object;
+
+    /**
+     * @var array
+     */
+    protected $config;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
+
+    /**
+     * @var CallbackFactoryInterface
+     */
+    protected $callbackFactory;
+
+    /**
+     * @param object                   $object          Underlying object for the state machine
+     * @param array                    $config          Config array of the graph
+     * @param EventDispatcherInterface $dispatcher      EventDispatcher or null not to dispatch events
+     * @param CallbackFactoryInterface $callbackFactory CallbackFactory or null to use the default one
+     *
+     * @throws SMException If object doesn't have configured property path for state
+     */
+    public function __construct(
+        $object,
+        array $config,
+        EventDispatcherInterface $dispatcher      = null,
+        CallbackFactoryInterface $callbackFactory = null
+    ) {
+        $this->object          = $object;
+        $this->dispatcher      = $dispatcher;
+        $this->callbackFactory = $callbackFactory ?: new CallbackFactory('SM\Callback\Callback');
+
+        if (!isset($config['property_path'])) {
+            $config['property_path'] = 'state';
+        }
+
+        $this->config = $config;
+
+        // Test if the given object has the given state property path
+        try {
+            $this->getState();
+        } catch (NoSuchPropertyException $e) {
+            throw new SMException(sprintf(
+                'Cannot access to configured property path "%s" on object %s with graph "%s"',
+                $config['property_path'],
+                get_class($object),
+                $config['graph']
+            ));
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -36,9 +94,7 @@ class StateMachine extends SM\StateMachine\StateMachine
                 $this->config['graph']
             ));
         }
-
         $availabilities = [];
-
         foreach ($this->getState() as $state) {
             if (!in_array($state, $this->config['transitions'][$transition]['from'])) {
                 array_push($availabilities, false);
@@ -100,7 +156,7 @@ class StateMachine extends SM\StateMachine\StateMachine
 
         $this->callCallbacks($event, 'before');
 
-        $this->setState($this->config['transitions'][$transition]['to'], $this->config['transitions'][$transition]['from'], $transition);
+        $this->setState($this->config['transitions'][$transition]['to'], $this->config['transitions'][$transition]['from']);
 
         $this->callCallbacks($event, 'after');
 
@@ -112,13 +168,49 @@ class StateMachine extends SM\StateMachine\StateMachine
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getState()
+    {
+        $accessor = new PropertyAccessor();
+        return $accessor->getValue($this->object, $this->config['property_path']);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getObject()
+    {
+        return $this->object;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getGraph()
+    {
+        return $this->config['graph'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPossibleTransitions()
+    {
+        return array_filter(
+            array_keys($this->config['transitions']),
+            array($this, 'can')
+        );
+    }
+
+    /**
      * Set a new state to the underlying object
      *
      * @param string $state
      *
      * @throws SMException
      */
-    protected function setState($toStates, $fromStates, $transition)
+    protected function setState($toStates, $fromStates)
     {
         foreach ($toStates as $toState) {
             if (!in_array($toState, $this->config['states'])) {
@@ -145,5 +237,29 @@ class StateMachine extends SM\StateMachine\StateMachine
         // set the new states
         $accessor = new PropertyAccessor();
         $accessor->setValue($this->object, $this->config['property_path'], $newStates);
+    }
+
+    /**
+     * Builds and calls the defined callbacks
+     *
+     * @param TransitionEvent $event
+     * @param string $position
+     * @return bool
+     */
+    protected function callCallbacks(TransitionEvent $event, $position)
+    {
+        if (!isset($this->config['callbacks'][$position])) {
+            return true;
+        }
+
+        $result = true;
+        foreach ($this->config['callbacks'][$position] as &$callback) {
+            if (!$callback instanceof CallbackInterface) {
+                $callback = $this->callbackFactory->get($callback);
+            }
+
+            $result = call_user_func($callback, $event) && $result;
+        }
+        return $result;
     }
 }

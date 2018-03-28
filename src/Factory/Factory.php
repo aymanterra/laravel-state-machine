@@ -13,11 +13,32 @@ namespace troojaan\SM\Factory;
 
 use SM\Callback\CallbackFactoryInterface;
 use SM\SMException;
-use SM\Factory\AbstractFactory;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use SM\Factory\AbstractFactory;
 
-class Factory extends SM\Factory\Factory
+class Factory extends AbstractFactory
 {
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
+
+    /**
+     * @var CallbackFactoryInterface
+     */
+    protected $callbackFactory;
+
+    public function __construct(
+        array $configs,
+        EventDispatcherInterface $dispatcher      = null,
+        CallbackFactoryInterface $callbackFactory = null
+    ) {
+        parent::__construct($configs);
+
+        $this->dispatcher      = $dispatcher;
+        $this->callbackFactory = $callbackFactory;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -29,7 +50,7 @@ class Factory extends SM\Factory\Factory
             $class = $config['state_machine_class'];
         } else {
             throw new SMException(sprintf(
-               'Class "%s" for creating a new state machine does not exist.',
+                'Class "%s" for creating a new state machine does not exist.',
                 $config['state_machine_class']
             ));
         }
