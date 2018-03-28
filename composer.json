@@ -1,5 +1,5 @@
 {
-    "name": "sebdesign/laravel-state-machine",
+    "name": "troojaan/laravel-state-machine",
     "description": "Winzou State Machine service provider for Laravel",
     "keywords": [
         "laravel",
@@ -7,13 +7,13 @@
         "event",
         "statemachine"
     ],
-    "homepage": "https://github.com/sebdesign/laravel-state-machine",
+    "homepage": "https://github.com/troojaan/laravel-state-machine",
     "license": "MIT",
     "authors": [
         {
-            "name": "Sébastien Nikolaou",
-            "email": "info@sebdesign.eu",
-            "homepage": "http://sebdesign.eu",
+            "name": "Kareem Adel",
+            "email": "troojaan@gmail.com",
+            "homepage": "http://no-valid-url.sa",
             "role": "Developer"
         }
     ],
