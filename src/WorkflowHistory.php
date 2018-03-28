@@ -29,6 +29,13 @@ class WorkflowHistory extends Model
     ];
 
     /**
+     * @var array
+     */
+    protected $casts = [
+        'current_state' => 'array'
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function model()
