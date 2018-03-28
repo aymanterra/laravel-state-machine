@@ -9,7 +9,7 @@ use troojaan\SM\Commands\Debug;
 use troojaan\SM\Event\Dispatcher;
 use SM\Callback\CallbackFactoryInterface;
 use SM\Callback\CascadeTransitionCallback;
-use SM\Factory\Factory;
+use troojaan\SM\Factory\Factory;
 use SM\Factory\FactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
