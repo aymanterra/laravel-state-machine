@@ -111,7 +111,7 @@ class StateMachine implements StateMachineInterface
             }
         }
 
-        if (isset($this->config['transitions'][$transition]['dependent']) && $this->config['transitions'][$transition]['dependent']) {
+        if (count($this->config['transitions'][$transition]['from']) > 1) {
             if (in_array(false, $availabilities)) {
                 return false;
             }
