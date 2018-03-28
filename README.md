@@ -1,9 +1,9 @@
 # Winzou State Machine service provider for Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/sebdesign/laravel-state-machine.svg?style=flat-square)](https://packagist.org/packages/sebdesign/laravel-state-machine)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/troojaan/laravel-state-machine.svg?style=flat-square)](https://packagist.org/packages/troojaan/laravel-state-machine)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/sebdesign/laravel-state-machine/master.svg?style=flat-square)](https://travis-ci.org/sebdesign/laravel-state-machine)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/sebdesign/laravel-state-machine/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/sebdesign/laravel-state-machine/?branch=master)
+[![Build Status](https://img.shields.io/travis/troojaan/laravel-state-machine/master.svg?style=flat-square)](https://travis-ci.org/troojaan/laravel-state-machine)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/troojaan/laravel-state-machine/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/troojaan/laravel-state-machine/?branch=master)
 [![StyleCI](https://styleci.io/repos/78893356/shield?style=flat-square)](https://styleci.io/repos/78893356)
 
 This is a Laravel service provider for [winzou/state-machine](https://github.com/winzou/state-machine).
@@ -23,7 +23,7 @@ This is a Laravel service provider for [winzou/state-machine](https://github.com
 You can install the package via composer. This package requires Laravel 5.1 or higher.
 
 ``` bash
-composer require sebdesign/laravel-state-machine
+composer require troojaan/laravel-state-machine
 ```
 
 Since version 5.5, Laravel uses package auto-discovery, so you don't need to manually add the ServiceProvider and the facade. If you don't use auto-discovery or you are using an older version, add the service provider and the facade in config/app.php.
@@ -32,11 +32,11 @@ Since version 5.5, Laravel uses package auto-discovery, so you don't need to man
 <?php
 
 'providers' => [
-    Sebdesign\SM\ServiceProvider::class,
+    troojaan\SM\ServiceProvider::class,
 ],
 
 'aliases' => [
-    'StateMachine' => Sebdesign\SM\Facade::class,
+    'StateMachine' => troojaan\SM\Facade::class,
 ],
 ```
 
@@ -45,7 +45,7 @@ Since version 5.5, Laravel uses package auto-discovery, so you don't need to man
 Publish the config file in `config/state-machine.php`.
 
 ``` bash
-php artisan vendor:publish --provider="Sebdesign\SM\ServiceProvider"
+php artisan vendor:publish --provider="troojaan\SM\ServiceProvider"
 ```
 
 Please see the documentation of the [StateMachineBundle](https://github.com/winzou/StateMachineBundle) for all the available options.
@@ -282,7 +282,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email info@sebdesign.eu instead of using the issue tracker.
+If you discover any security related issues, please email info@troojaan.eu instead of using the issue tracker.
 
 ## Credits
 

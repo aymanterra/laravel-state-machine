@@ -1,12 +1,12 @@
 <?php
 
-namespace Sebdesign\SM;
+namespace troojaan\SM;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Sebdesign\SM\Callback\ContainerAwareCallback;
-use Sebdesign\SM\Callback\ContainerAwareCallbackFactory;
-use Sebdesign\SM\Commands\Debug;
-use Sebdesign\SM\Event\Dispatcher;
+use troojaan\SM\Callback\ContainerAwareCallback;
+use troojaan\SM\Callback\ContainerAwareCallbackFactory;
+use troojaan\SM\Commands\Debug;
+use troojaan\SM\Event\Dispatcher;
 use SM\Callback\CallbackFactoryInterface;
 use SM\Callback\CascadeTransitionCallback;
 use SM\Factory\Factory;

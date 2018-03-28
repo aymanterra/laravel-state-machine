@@ -1,11 +1,11 @@
 <?php
 
-namespace Sebdesign\SM\Test\Callback;
+namespace troojaan\SM\Test\Callback;
 
-use Sebdesign\SM\Callback\ContainerAwareCallback;
-use Sebdesign\SM\Test\Article;
-use Sebdesign\SM\Test\Service;
-use Sebdesign\SM\Test\TestCase;
+use troojaan\SM\Callback\ContainerAwareCallback;
+use troojaan\SM\Test\Article;
+use troojaan\SM\Test\Service;
+use troojaan\SM\Test\TestCase;
 use SM\Callback\CallbackInterface;
 use SM\Event\TransitionEvent;
 use SM\Factory\FactoryInterface;
@@ -71,7 +71,7 @@ class ContainerAwareCallbackTest extends TestCase
     {
         // Arrange
 
-        $callable = 'Sebdesign\SM\Test\Service@guardOnSubmitting';
+        $callable = 'troojaan\SM\Test\Service@guardOnSubmitting';
 
         $this->app['config']->set('state-machine.graphA.class', Article::class);
         $this->app['config']->set('state-machine.graphA.callbacks.guard.guard_on_submitting.do', $callable);

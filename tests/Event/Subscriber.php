@@ -1,6 +1,6 @@
 <?php
 
-namespace Sebdesign\SM\Test\Event;
+namespace troojaan\SM\Test\Event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

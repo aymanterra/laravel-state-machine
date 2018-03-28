@@ -1,6 +1,6 @@
 <?php
 
-namespace Sebdesign\SM\Test;
+namespace troojaan\SM\Test;
 
 use StateMachine;
 

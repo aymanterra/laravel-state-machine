@@ -1,6 +1,6 @@
 <?php
 
-namespace Sebdesign\SM\Callback;
+namespace troojaan\SM\Callback;
 
 use Illuminate\Container\BoundMethod;
 

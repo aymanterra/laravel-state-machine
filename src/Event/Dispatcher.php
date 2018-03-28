@@ -1,6 +1,6 @@
 <?php
 
-namespace Sebdesign\SM\Event;
+namespace troojaan\SM\Event;
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Symfony\Component\EventDispatcher\Event;

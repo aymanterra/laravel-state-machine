@@ -29,12 +29,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Sebdesign\\SM\\": "src"
+            "troojaan\\SM\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Sebdesign\\SM\\Test\\": "tests"
+            "troojaan\\SM\\Test\\": "tests"
         }
     },
     "scripts": {
@@ -46,10 +46,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Sebdesign\\SM\\ServiceProvider"
+                "troojaan\\SM\\ServiceProvider"
             ],
             "aliases": {
-                "StateMachine": "Sebdesign\\SM\\Facade"
+                "StateMachine": "troojaan\\SM\\Facade"
             }
         }
     }

@@ -6,7 +6,7 @@
  * Time: 2:30 PM
  */
 
-namespace Sebdesign\SM;
+namespace troojaan\SM;
 
 
 use Illuminate\Support\Facades\Auth;

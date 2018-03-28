@@ -1,9 +1,9 @@
 <?php
 
-namespace Sebdesign\SM\Test\Event;
+namespace troojaan\SM\Test\Event;
 
-use Sebdesign\SM\Test\Article;
-use Sebdesign\SM\Test\TestCase;
+use troojaan\SM\Test\Article;
+use troojaan\SM\Test\TestCase;
 use SM\Event\SMEvents;
 use Symfony\Component\EventDispatcher\Event;
 

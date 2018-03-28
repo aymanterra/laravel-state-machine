@@ -1,6 +1,6 @@
 <?php
 
-namespace Sebdesign\SM;
+namespace troojaan\SM;
 
 use Illuminate\Support\Facades\Facade as BaseFacade;
 

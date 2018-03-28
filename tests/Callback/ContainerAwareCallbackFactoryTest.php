@@ -1,10 +1,10 @@
 <?php
 
-namespace Sebdesign\SM\Test\Callback;
+namespace troojaan\SM\Test\Callback;
 
-use Sebdesign\SM\Callback\ContainerAwareCallback;
-use Sebdesign\SM\Callback\ContainerAwareCallbackFactory;
-use Sebdesign\SM\Test\TestCase;
+use troojaan\SM\Callback\ContainerAwareCallback;
+use troojaan\SM\Callback\ContainerAwareCallbackFactory;
+use troojaan\SM\Test\TestCase;
 use SM\Callback\CallbackFactoryInterface;
 
 class ContainerAwareCallbackFactoryTest extends TestCase
