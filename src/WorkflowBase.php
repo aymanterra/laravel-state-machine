@@ -46,11 +46,11 @@ abstract class WorkflowBase
     {
         $user = Auth::user();
 
-        $object->workflow_history()->create(array(
+        $object->workflow_history()->create([
             'user_id' => $user->id,
             'current_state' => $object->state, //$event->getConfig()['to'],
             'comment' => request('comment') ?: '',
             'workflow_name' => $workflowName,
-        ));
+        ]);
     }
 }

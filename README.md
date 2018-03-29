@@ -282,11 +282,12 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email info@troojaan.eu instead of using the issue tracker.
+If you discover any security related issues, please email Sébastien at info@sebdesign.eu instead of using the issue tracker.
 
 ## Credits
 
 - [Alexandre Bacco](https://github.com/winzou)
+- [Sébastien Nikolaou](https://github.com/sebdesign)
 
 ## License
 
