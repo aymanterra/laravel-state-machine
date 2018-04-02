@@ -5,7 +5,7 @@ namespace troojaan\SM;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use troojaan\SM\Callback\ContainerAwareCallback;
 use troojaan\SM\Callback\ContainerAwareCallbackFactory;
-use troojaan\SM\Commands\Debug;
+use troojaan\SM\Commands\WorkflowDump;
 use troojaan\SM\Event\Dispatcher;
 use SM\Callback\CallbackFactoryInterface;
 use SM\Callback\CascadeTransitionCallback;
@@ -92,12 +92,12 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function registerCommands()
     {
-        $this->app->bind(Debug::class, function () {
-            return new Debug($this->app['config']->get('state-machine', []));
-        });
+//        $this->app->bind(WorkflowDump::class, function () {
+//            return new WorkflowDump($this->app['config']->get('state-machine', []));
+//        });
 
         $this->commands([
-            Debug::class,
+            WorkflowDump::class,
         ]);
     }
 
@@ -112,7 +112,7 @@ class ServiceProvider extends BaseServiceProvider
             'sm.callback.factory',
             'sm.event.dispatcher',
             'sm.factory',
-            Debug::class,
+            WorkflowDump::class,
         ];
     }
 }

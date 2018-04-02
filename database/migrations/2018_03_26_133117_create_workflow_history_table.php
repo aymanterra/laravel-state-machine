@@ -22,7 +22,7 @@ class CreateWorkflowHistoryTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-            $table->string('current_state');
+            $table->text('current_state');
             $table->string('workflow_name');
             $table->text('comment')->nullable();
             $table->timestamps();
