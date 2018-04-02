@@ -288,6 +288,7 @@ If you discover any security related issues, please email Sébastien at info@seb
 
 - [Alexandre Bacco](https://github.com/winzou)
 - [Sébastien Nikolaou](https://github.com/sebdesign)
+- [Ayman Terra](https://github.com/aymanterra)
 
 ## License
 
