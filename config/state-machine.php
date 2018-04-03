@@ -129,7 +129,7 @@ return [
         'class' => App\Order::class,
 
         // name of the graph (default is "default")
-        'graph' => 'orders2DirDepend',
+        'graph' => 'orders2Dir',
 
         // property of your object holding the actual state (default is "state")
         'property_path' => 'state',
