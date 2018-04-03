@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace troojaan\SM\StateMachine;
+namespace Sebdesign\SM\StateMachine;
 
 use SM\Callback\CallbackFactory;
 use SM\Callback\CallbackFactoryInterface;
@@ -94,6 +94,7 @@ class StateMachine implements StateMachineInterface
                 $this->config['graph']
             ));
         }
+
         $availabilities = [];
         foreach ($this->getState() as $state) {
             if (!in_array($state, $this->config['transitions'][$transition]['from'])) {
@@ -111,8 +112,8 @@ class StateMachine implements StateMachineInterface
             }
         }
 
-        if (count($this->config['transitions'][$transition]['from']) > 1) {
-            if (in_array(false, $availabilities)) {
+        if ($this->config['transitions'][$transition]['from'] > 1 && isset($this->config['transitions'][$transition]['dependent']) && $this->config['transitions'][$transition]['dependent']) {
+            if (array_diff($this->config['transitions'][$transition]['from'], $this->getState())) {
                 return false;
             }
             return true;
@@ -156,7 +157,7 @@ class StateMachine implements StateMachineInterface
 
         $this->callCallbacks($event, 'before');
 
-        $this->setState($this->config['transitions'][$transition]['to'], $this->config['transitions'][$transition]['from']);
+        $this->setState($this->config['transitions'][$transition]['to'], $this->config['transitions'][$transition]['from'], $transition);
 
         $this->callCallbacks($event, 'after');
 
@@ -210,10 +211,10 @@ class StateMachine implements StateMachineInterface
      *
      * @throws SMException
      */
-    protected function setState($toStates, $fromStates)
+    protected function setState($toStates, $fromStates, $transition)
     {
         foreach ($toStates as $toState) {
-            if (!in_array($toState, $this->config['states'])) {
+            if (!in_array($toState, array_keys($this->config['states']))) {
                 throw new SMException(sprintf(
                     'Cannot set the state to "%s" to object "%s" with graph %s because it is not pre-defined.',
                     $toState,
@@ -222,14 +223,29 @@ class StateMachine implements StateMachineInterface
                 ));
             }
         }
+
         // the final new states that need to be saved in DB
         $newStates = [];
 
         // the current states which returns from DB
         $currentStates = $this->object[$this->config['property_path']];
+        if ($this->config['transitions'][$transition]['from'] > 1 && isset($this->config['transitions'][$transition]['dependent']) && !$this->config['transitions'][$transition]['dependent']) {
+            $states_intersection = array_values(array_intersect($fromStates, $this->object[$this->config['property_path']]));
+            $branch_transition = $this->config['transitions'][$transition]['branch_transition'];
+            $branch_states = [];
+            foreach ($this->config['states'] as $state_key => $state_value) {
+                if (in_array($branch_transition, $state_value['splitted_by'])) {
+                    array_push($branch_states, $state_key);
+                }
+            }
 
-        // removes the current transition  states-from from current states (not all current states)
-        $newStates = array_diff($currentStates, $fromStates);
+            // removes the current transition  states-from from current states (not all current states)
+            $newStates = array_diff($currentStates, $branch_states);
+
+        } else {
+            // removes the current transition  states-from from current states (not all current states)
+            $newStates = array_diff($currentStates, $fromStates);
+        }
 
         // add the current transition states-to to current states
         $newStates = array_merge($newStates, $toStates);
