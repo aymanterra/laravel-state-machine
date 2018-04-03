@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sebdesign\SM\StateMachine;
+namespace troojaan\SM\StateMachine;
 
 use SM\Callback\CallbackFactory;
 use SM\Callback\CallbackFactoryInterface;
@@ -45,9 +45,9 @@ class StateMachine implements StateMachineInterface
     protected $callbackFactory;
 
     /**
-     * @param object                   $object          Underlying object for the state machine
-     * @param array                    $config          Config array of the graph
-     * @param EventDispatcherInterface $dispatcher      EventDispatcher or null not to dispatch events
+     * @param object $object Underlying object for the state machine
+     * @param array $config Config array of the graph
+     * @param EventDispatcherInterface $dispatcher EventDispatcher or null not to dispatch events
      * @param CallbackFactoryInterface $callbackFactory CallbackFactory or null to use the default one
      *
      * @throws SMException If object doesn't have configured property path for state
@@ -55,11 +55,12 @@ class StateMachine implements StateMachineInterface
     public function __construct(
         $object,
         array $config,
-        EventDispatcherInterface $dispatcher      = null,
+        EventDispatcherInterface $dispatcher = null,
         CallbackFactoryInterface $callbackFactory = null
-    ) {
-        $this->object          = $object;
-        $this->dispatcher      = $dispatcher;
+    )
+    {
+        $this->object = $object;
+        $this->dispatcher = $dispatcher;
         $this->callbackFactory = $callbackFactory ?: new CallbackFactory('SM\Callback\Callback');
 
         if (!isset($config['property_path'])) {
@@ -229,7 +230,9 @@ class StateMachine implements StateMachineInterface
 
         // the current states which returns from DB
         $currentStates = $this->object[$this->config['property_path']];
-        if ($this->config['transitions'][$transition]['from'] > 1 && isset($this->config['transitions'][$transition]['dependent']) && !$this->config['transitions'][$transition]['dependent']) {
+        if ($this->config['transitions'][$transition]['from'] > 1
+            && isset($this->config['transitions'][$transition]['dependent'])
+            && !$this->config['transitions'][$transition]['dependent']) {
             $states_intersection = array_values(array_intersect($fromStates, $this->object[$this->config['property_path']]));
             $branch_transition = $this->config['transitions'][$transition]['branch_transition'];
             $branch_states = [];

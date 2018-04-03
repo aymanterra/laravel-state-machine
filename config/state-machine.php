@@ -244,23 +244,23 @@ return [
             ],
             'exit_enterview' => [
                 'from' => ['waiting_HR_approval'],
-                'to' =>  ['exit_enterview_done'],
+                'to' => ['exit_enterview_done'],
             ],
             'prepare_docs' => [
                 'from' => ['exit_enterview_done'],
-                'to' =>  ['waiting_docs_in_branch', 'waiting_docs_in_main_office'],
+                'to' => ['waiting_docs_in_branch', 'waiting_docs_in_main_office'],
             ],
             'deliver_docs_in_branch' => [
                 'from' => ['waiting_docs_in_branch'],
-                'to' =>  ['docs_delivered_in_branch'],
+                'to' => ['docs_delivered_in_branch'],
             ],
             'deliver_docs_in_main_office' => [
                 'from' => ['waiting_docs_in_main_office'],
-                'to' =>  ['docs_delivered_in_main_office'],
+                'to' => ['docs_delivered_in_main_office'],
             ],
             'HR_deliver_all_docs' => [
                 'from' => ['docs_delivered_in_main_office', 'docs_delivered_in_branch'],
-                'to' =>  ['waiting_HR_manager_approval'],
+                'to' => ['waiting_HR_manager_approval'],
                 // while merging from multiple states to one state you have to define if this states are dependent
                 // of each other or not
                 //  dependent: (this transition wouldn't be available unless all the 'from states'
@@ -269,69 +269,69 @@ return [
                 //  independent: (means that this transition will be available if one or more 'from states'
                 //      are in current states
                 //      exp: the final approval of the manager needs at least one approval from 2 different departments
-                'dependent' =>  false,
+                'dependent' => false,
                 // if it is independent you have to define to transition which split this branch
-                'branch_transition' =>  'prepare_docs',
+                'branch_transition' => 'prepare_docs',
             ],
             'HR_manager_approval' => [
                 'from' => ['waiting_HR_manager_approval'],
-                'to' =>  ['HR_approved'],
+                'to' => ['HR_approved'],
             ],
             'disable_email_account' => [
                 'from' => ['waiting_IT_approval'],
-                'to' =>  ['email_disabled_and_wait_IT_manager'],
+                'to' => ['email_disabled_and_wait_IT_manager'],
             ],
             'IT_manager_approval' => [
                 'from' => ['email_disabled_and_wait_IT_manager'],
-                'to' =>  ['IT_approved'],
+                'to' => ['IT_approved'],
             ],
             'end_finance_relation' => [
                 'from' => ['waiting_accountant_approval'],
-                'to' =>  ['waiting_purchasing_dep_approval', 'waiting_bank_account_closing', 'waiting_personal_loans_closing'],
+                'to' => ['waiting_purchasing_dep_approval', 'waiting_bank_account_closing', 'waiting_personal_loans_closing'],
             ],
             'no_pending_purchasing' => [
                 'from' => ['waiting_purchasing_dep_approval'],
-                'to' =>  ['purchasing_dep_approved'],
+                'to' => ['purchasing_dep_approved'],
             ],
             'bank_account_closed' => [
                 'from' => ['waiting_bank_account_closing'],
-                'to' =>  ['bank_account_closed'],
+                'to' => ['bank_account_closed'],
             ],
             'check_personal_loans' => [
                 'from' => ['waiting_personal_loans_closing'],
-                'to' =>  ['waiting_personal_loans_closing_indep_1', 'waiting_personal_loans_closing_indep_2', 'waiting_personal_loans_closing_indep_3'],
+                'to' => ['waiting_personal_loans_closing_indep_1', 'waiting_personal_loans_closing_indep_2', 'waiting_personal_loans_closing_indep_3'],
             ],
             'personal_loans_closing_indep_1_to_1_1' => [
                 'from' => ['waiting_personal_loans_closing_indep_1'],
-                'to' =>  ['waiting_personal_loans_closing_indep_1_1'],
+                'to' => ['waiting_personal_loans_closing_indep_1_1'],
             ],
             'personal_loans_closing_indep_1_1_to_1_2' => [
                 'from' => ['waiting_personal_loans_closing_indep_1_1'],
-                'to' =>  ['waiting_personal_loans_closing_indep_1_2'],
+                'to' => ['waiting_personal_loans_closing_indep_1_2'],
             ],
             'personal_loans_closing_indep_2_to_2_1' => [
                 'from' => ['waiting_personal_loans_closing_indep_2'],
-                'to' =>  ['waiting_personal_loans_closing_indep_2_1'],
+                'to' => ['waiting_personal_loans_closing_indep_2_1'],
             ],
             'personal_loans_closing_indep_3_to_3_1' => [
                 'from' => ['waiting_personal_loans_closing_indep_3'],
-                'to' =>  ['waiting_personal_loans_closing_indep_3_1'],
+                'to' => ['waiting_personal_loans_closing_indep_3_1'],
             ],
             'close_personal_loans' => [
                 'from' => ['waiting_personal_loans_closing_indep_1_2', 'waiting_personal_loans_closing_indep_2_1', 'waiting_personal_loans_closing_indep_3_1'],
-                'to' =>  ['personal_loans_closed'],
-                'dependent' =>  false,
-                'branch_transition' =>  'check_personal_loans',
+                'to' => ['personal_loans_closed'],
+                'dependent' => false,
+                'branch_transition' => 'check_personal_loans',
             ],
             'accountant_manager_approval' => [
                 'from' => ['purchasing_dep_approved', 'bank_account_closed', 'personal_loans_closed'],
-                'to' =>  ['accountant_approved'],
-                'dependent' =>  true,
+                'to' => ['accountant_approved'],
+                'dependent' => true,
             ],
             'CEO_final_approval' => [
-                'from' => ['HR_approved' ,'IT_approved' , 'accountant_approved'],
-                'to' =>  ['CEO_approved'],
-                'dependent' =>  true,
+                'from' => ['HR_approved', 'IT_approved', 'accountant_approved'],
+                'to' => ['CEO_approved'],
+                'dependent' => true,
             ],
         ],
 
@@ -353,7 +353,13 @@ return [
             'before' => [],
 
             // will be called after applying a transition
-            'after' => [],
+            'after' => [
+                [
+                    'on' => array_keys(config('state-machine.orders2Dir.transitions')),
+                    'do' => 'troojaan\SM\WorkflowBase@addHistory',
+                    'args' => ['object', 'event', '"simple"'],
+                ],
+            ],
         ],
     ],
 

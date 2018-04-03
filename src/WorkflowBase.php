@@ -15,14 +15,8 @@ use Illuminate\Support\Facades\Auth;
  * Class workflowBase
  * @package App
  */
-abstract class WorkflowBase
+class WorkflowBase
 {
-    /**
-     * @param $order
-     * @param $event
-     * @return mixed
-     */
-    abstract protected function handler($object, $event);
 
     /**
      * @param $object
