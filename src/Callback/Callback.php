@@ -14,6 +14,7 @@ namespace troojaan\SM\Callback;
 use SM\Event\TransitionEvent;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use SM\Callback\CallbackInterface;
 
 class Callback implements CallbackInterface
 {
