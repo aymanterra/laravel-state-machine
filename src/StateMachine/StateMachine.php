@@ -61,7 +61,7 @@ class StateMachine implements StateMachineInterface
     {
         $this->object = $object;
         $this->dispatcher = $dispatcher;
-        $this->callbackFactory = $callbackFactory ?: new CallbackFactory('SM\Callback\Callback');
+        $this->callbackFactory = $callbackFactory ?: new CallbackFactory('troojaan\SM\Callback\Callback');
 
         if (!isset($config['property_path'])) {
             $config['property_path'] = 'state';

@@ -3,7 +3,7 @@
 namespace troojaan\SM\Callback;
 
 use Illuminate\Contracts\Container\Container;
-use SM\Callback\Callback;
+use troojaan\SM\Callback\Callback;
 use SM\Event\TransitionEvent;
 
 class ContainerAwareCallback extends Callback
